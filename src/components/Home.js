@@ -1,8 +1,9 @@
 import axios, {} from 'axios'
 import React, {useState, useEffect} from 'react'
+import { useHistory } from 'react-router-dom'
 
 const Home = () => {
-    
+    const history = useHistory()
     const [categories, setCategories] = useState()
     const [gotdata, setGotdata] = useState(false)
     const [images, setImages] = useState([])
@@ -18,29 +19,21 @@ const Home = () => {
         }
     }, [])
 
-    useEffect(() => {
-        let mounted = false
-        let arre = []
-        if(!mounted && categories !== undefined){
-           async function myAsync(){
-               try{
-                await categories.map(categ => {
-                        axios.get(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q='${categ.name}'`)
-                        .then(res => {setImages([...images, res.data.totalHits !== 0? {id: categ.id, url: res.data.hits[0].pageURL} : {id: categ.id, url: null}])})
-                        .then(() => console.log(images))
-                    });
-                }
-                catch(e){
-                    console.log(e)
-                }
-            }
-            myAsync()
+    // useEffect(() => {
+    //     let mounted = false
+    //     let arre = []
+    //     if(!mounted && categories !== undefined){
+    //             categories.map(categ => {
+    //                 axios.get(`https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q='${categ.name}'`)
+    //                     .then(res => {setImages([...images, {id: categ.id, url: res.data.totalHits !== 0 ? res.data.hits[0].pageURL : null}])})
+    //                     .then(() => console.log(images))
+    //                 });
             
-        }
-        return () => {
-            mounted = true
-        }
-    }, [gotdata])
+    //     }
+    //     return () => {
+    //         mounted = true
+    //     }
+    // }, [gotdata])
 
     useEffect(() => {
         axios.get('https://opentdb.com/api_category.php')
@@ -54,7 +47,9 @@ const Home = () => {
         <div>
             Quiz
             <div>
-                {}
+                {categories !== undefined ?
+                categories.map(categ => 
+                    <div style={{display: 'flex'}} onClick={() => history.push(`/${categ.id}`)} >{categ.name}</div>) : null}
             </div>
         </div>
     )
