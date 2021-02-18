@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
 
-const Card = ({Q, A, I, setScore}) => {
-    const [options, setOptions] = useState([...I, A])
+const Card = ({Q, A, I, setScore, scoreIndex}) => {
+    const options = [...I, A]
     const [selected, setSelected] = useState()
     const [ansChanged, setAnsChanged] = useState(false)
     useEffect(() => {
         if(selected === undefined){
             // setScore(score => score)
         }
-        else if(selected === A) setScore(score => score+4)
-        else setScore(score => score-1)
+        else if(selected === A) setScore(score => ({...score, [scoreIndex]: 4}))
+        else setScore(score => ({...score, [scoreIndex]: -1}))
     }, [ansChanged])
 
     const selectHandler = (option) => {

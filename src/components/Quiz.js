@@ -4,10 +4,10 @@ import { useHistory, useParams } from 'react-router-dom'
 import Card from './Card'
 
 const timeInterval = 1000
-const testTime = 60000
+const testTime = 6000
 const number_questions = 10
 const initialScores = {}
-for(let i = 0;i<number_questions;i++){
+for(let i = 1;i<=number_questions;i++){
     initialScores[i] = 0
 }
 console.log("Init",initialScores)
@@ -19,7 +19,7 @@ const Quiz = () => {
     const [timer, setTimer] = useState(false)
     const [gameover, setGameover] = useState(false)
     const [timeLeft, setTimeLeft] = useState(testTime)
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(initialScores)
     const {id} = useParams()
     // useEffect(() => {
     //     axios.get(`https://opentdb.com/api.php?amount=10&category=${id}&difficulty=${difficulty}`)
@@ -73,8 +73,18 @@ const Quiz = () => {
         setTimer(false)
         setGameover(false)
         setTimeLeft(testTime)
-        setScore(0)
+        setScore(initialScores)
     }
+
+    const scoreHandler = () => {
+        let finalScore = 0
+        let key
+        for(key in score){
+            finalScore += score[key]
+        }
+        return finalScore
+    }
+
         if(!timer && !gameover){
             return(   
             <form onSubmit={submitHandler}>
@@ -91,8 +101,8 @@ const Quiz = () => {
         else if(timer && !gameover){
             return(
                 <div>
-                    {questions.map(q => (<div style={{display: 'flex', flex: 1}}>
-                        <Card Q={q.question} I = {q.incorrect_answers} A = {q.correct_answer} setScore={setScore}/>
+                    {questions.map((q,i) => (<div style={{display: 'flex', flex: 1}}>
+                        <Card Q={q.question} I = {q.incorrect_answers} A = {q.correct_answer} setScore={setScore} scoreIndex={i}/>
                     </div>))}
                     <div>{timeLeft/timeInterval}</div>
                 </div>
@@ -101,7 +111,7 @@ const Quiz = () => {
         else if(gameover){
             return (
                 <div>
-                <div>Your Scorecard, your score is {score}</div>
+                <div>Your Scorecard, your score is {scoreHandler()}</div>
                 <button onClick={() => history.push('/')}>Go to home</button>
                 <button onClick={resetHandler}>Retry</button>
                 </div>
