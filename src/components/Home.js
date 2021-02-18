@@ -66,8 +66,9 @@ const Home = () => {
       Quiz
       <div>
         {categories !== undefined
-          ? categories.map((categ) => (
+          ? categories.map((categ, i) => (
               <div
+                key={i}
                 style={{ display: "flex" }}
                 onClick={() => history.push(`/${categ.id}`)}
               >{checkIfExist(categ.id) ?

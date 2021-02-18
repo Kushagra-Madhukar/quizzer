@@ -4,13 +4,13 @@ import { useHistory, useParams } from 'react-router-dom'
 import Card from './Card'
 
 const timeInterval = 1000
-const testTime = 6000
+const testTime = 60000
 const number_questions = 10
 const initialScores = {}
 for(let i = 1;i<=number_questions;i++){
     initialScores[i] = 0
 }
-console.log("Init",initialScores)
+// console.log("Init",initialScores)
 const Quiz = () => {
     const history = useHistory()
     const [difficulty, setDifficulty] = useState('easy')
@@ -49,11 +49,11 @@ const Quiz = () => {
                 setTimer(false)
                 setGameover(true)
             }, testTime);
-            console.log("a inside", a)
+            // console.log("a inside", a)
         }
-        console.log("a",a)
+        // console.log("a",a)
         return () => {
-            console.log("a beta", a)
+            // console.log("a beta", a)
             clearTimeout(timer1)
         }
     }, [timer])
@@ -63,7 +63,7 @@ const Quiz = () => {
         // console.log(id)
         // console.log(difficulty)
         axios.get(`https://opentdb.com/api.php?amount=${number_questions}&category=${id}&difficulty=${difficulty}`)
-            .then(res => {setQuestions(res.data.results); setTimer(true);console.log(res.data.results[0])})
+            .then(res => {setQuestions(res.data.results); setTimer(true);})
             .catch(err => console.log(err))
     }
 
@@ -101,7 +101,7 @@ const Quiz = () => {
         else if(timer && !gameover){
             return(
                 <div>
-                    {questions.map((q,i) => (<div style={{display: 'flex', flex: 1}}>
+                    {questions.map((q,i) => (<div key = {i} style={{display: 'flex', flex: 1}}>
                         <Card Q={q.question} I = {q.incorrect_answers} A = {q.correct_answer} setScore={setScore} scoreIndex={i}/>
                     </div>))}
                     <div>{timeLeft/timeInterval}</div>

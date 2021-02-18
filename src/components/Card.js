@@ -21,8 +21,8 @@ const Card = ({Q, A, I, setScore, scoreIndex}) => {
         width: '100%'}}>
             <div dangerouslySetInnerHTML={{ __html: Q}}></div>
             <form>
-                {options.map(option => 
-                <div><input type='radio' name={option} value={option} checked={option === selected} onChange={() => selectHandler(option)}/><div dangerouslySetInnerHTML={{ __html: option}}/></div>
+                {options.map((option,i) => 
+                <div key={i}><input type='radio' name={option} value={option} checked={option === selected} onChange={() => selectHandler(option)}/><div dangerouslySetInnerHTML={{ __html: option}}/></div>
                 )
             }
             </form>
