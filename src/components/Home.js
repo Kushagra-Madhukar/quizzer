@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
+import './Home.scss'
 const defaultImage = 'https://www.indianlink.com.au/wp-content/uploads/2020/06/Leeds-round-of-Great-Legal-Quiz-set-for-20-November-800x500_c.png'
 
 const Home = () => {
@@ -64,7 +64,7 @@ const Home = () => {
   return (
     <div>
       Quiz
-      <div>
+      <div className="quiz-card">
         {categories !== undefined
           ? categories.map((categ, i) => (
               <div
@@ -76,7 +76,7 @@ const Home = () => {
                 :
                 <img src={defaultImage} alt={`${categ.name} Quiz`}/>
               }  
-                {categ.name}
+                <p>{categ.name}</p>
               </div>
             ))
           : null}

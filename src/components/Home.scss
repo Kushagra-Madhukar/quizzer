@@ -1,0 +1,45 @@
+.quiz-card{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    // grid-template-rows: repeat(auto-fit, minmax(300px, 400px));
+    justify-items: center;
+    // align-items: center;
+    column-gap: 3em;
+    row-gap: 3em;
+    padding: 3em;
+    @media screen and (max-width: 400px) {
+        padding: 1em;
+    }
+    div{
+        grid-row: span 1;
+        grid-column: span 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        box-shadow: 1px 1px 4px #C0C0C0;
+        border-radius: 4px;
+        max-height: 350px;
+        min-height: 300px;
+        background-color: #96351e;
+        &:hover{
+            box-shadow: 2px 2px 20px 7px #c0c0c0;
+            cursor: pointer;
+        }
+        img{
+            display: block;
+            width: 100%;
+            height: calc(100% - 4rem);
+            border-radius: inherit;
+            object-fit: cover;
+        }
+        p{
+            font-size: 1rem;
+            margin: 0;
+            padding: 0;
+            height: 4rem;
+            line-height: 4;
+        }
+    }
+}

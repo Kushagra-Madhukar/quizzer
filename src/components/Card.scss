@@ -1,0 +1,17 @@
+.question-paper{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 1em;
+    align-items: flex-start;
+    padding: 2em;
+    
+    .quiz-question{
+        text-align: start;
+    }
+    .question-option{
+        display: flex;
+        margin-top: 1em;
+    }
+}

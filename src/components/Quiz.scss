@@ -1,0 +1,61 @@
+.quiz-entry-menu{
+    display: flex;
+    flex-direction: column;
+    margin: 3em auto;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 400px;
+    text-align: start;
+    box-shadow: 1px 1px 4px #C0C0C0;
+    padding: 2em;
+    p{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        li{
+            margin-top: 0.6em;
+        }
+    }
+    button{
+        margin-top: 3em;
+    }
+}
+
+.quiz-questions-page{
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    .question-card-container{
+        flex: 1;
+    }
+    .timer-container{
+        width: 20%;
+        position: relative;
+        .timer-box{
+            position: fixed;
+            top: 50vh;
+            margin: 0 auto;
+            right: 10%;
+        }
+    }
+}
+
+.gameover-card{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 5px #C0C0C0;
+    width: 500px;
+    margin: 2em auto;
+    .btn-container{
+        margin-top: 1.5em;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        button{
+            margin: 1em;
+        }
+    }
+}

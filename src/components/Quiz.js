@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import Card from './Card'
+import './Quiz.scss'
 
 const timeInterval = 1000
 const testTime = 60000
@@ -87,8 +88,15 @@ const Quiz = () => {
 
         if(!timer && !gameover){
             return(   
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className="quiz-entry-menu">
                 <label>Please choose difficulty</label>
+                <p>Following are some Rules for the game-
+                    <ol>
+                        <li>Don't cheat</li>
+                        <li>Each question has +4 marks for correct response and -1 for incorrect response</li>
+                        <li>0 marks for an unattempted quetion</li>
+                    </ol>
+                </p>
                 <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -100,20 +108,24 @@ const Quiz = () => {
         }
         else if(timer && !gameover){
             return(
-                <div>
-                    {questions.map((q,i) => (<div key = {i} style={{display: 'flex', flex: 1}}>
-                        <Card Q={q.question} I = {q.incorrect_answers} A = {q.correct_answer} setScore={setScore} scoreIndex={i}/>
-                    </div>))}
-                    <div>{timeLeft/timeInterval}</div>
+                <div className="quiz-questions-page">
+                    <div className="question-card-container">
+                        {questions.map((q,i) => (<div key = {i}>
+                            <Card questionIndex ={i} Q={q.question} I = {q.incorrect_answers} A = {q.correct_answer} setScore={setScore} scoreIndex={i}/>
+                        </div>))}
+                    </div>
+                    <div className="timer-container"><div className="timer-box">{timeLeft/timeInterval}</div></div>
                 </div>
             )
         }
         else if(gameover){
             return (
-                <div>
-                <div>Your Scorecard, your score is {scoreHandler()}</div>
-                <button onClick={() => history.push('/')}>Go to home</button>
-                <button onClick={resetHandler}>Retry</button>
+                <div className="gameover-card">
+                    <div>Your Scorecard, your score is {scoreHandler()}</div>
+                    <div className="btn-container">
+                        <button onClick={() => history.push('/')}>Go to home</button>
+                        <button onClick={resetHandler}>Retry</button>
+                    </div>
                 </div>
             )
         }
