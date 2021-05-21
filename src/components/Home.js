@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import Footer from './Footer';
 import './Home.scss'
 const defaultImage = 'https://www.indianlink.com.au/wp-content/uploads/2020/06/Leeds-round-of-Great-Legal-Quiz-set-for-20-November-800x500_c.png'
 
@@ -84,6 +85,7 @@ const Home = () => {
             ))
           : null}
       </div>
+      <Footer/>
     </div>
   );
   else
