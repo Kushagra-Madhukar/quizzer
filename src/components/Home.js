@@ -27,8 +27,8 @@ const Home = () => {
   useEffect(() => {
     let mounted = false;
     if (!mounted && categories !== undefined && idPtr < categories.length) {
-        console.log(process.env.REACT_APP_PIXABAY_API_KEY)
-        alert(process.env.REACT_APP_PIXABAY_API_KEY)
+        // console.log(process.env.REACT_APP_PIXABAY_API_KEY)
+        // alert(process.env.REACT_APP_PIXABAY_API_KEY)
 
         axios
           .get(
