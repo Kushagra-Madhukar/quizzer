@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import Card from './Card'
 import './Quiz.scss'
 
@@ -21,6 +23,7 @@ const Quiz = () => {
     const [gameover, setGameover] = useState(false)
     const [timeLeft, setTimeLeft] = useState(testTime)
     const [score, setScore] = useState(initialScores)
+    const [loading, setLoading] = useState(false)
     const {id} = useParams()
     // useEffect(() => {
     //     axios.get(`https://opentdb.com/api.php?amount=10&category=${id}&difficulty=${difficulty}`)
@@ -63,8 +66,9 @@ const Quiz = () => {
         Event.preventDefault()
         // console.log(id)
         // console.log(difficulty)
+        setLoading(true)
         axios.get(`https://opentdb.com/api.php?amount=${number_questions}&category=${id}&difficulty=${difficulty}`)
-            .then(res => {setQuestions(res.data.results); setTimer(true);})
+            .then(res => {setQuestions(res.data.results); setTimer(true); setLoading(false);})
             .catch(err => console.log(err))
     }
 
@@ -86,7 +90,35 @@ const Quiz = () => {
         return finalScore
     }
 
-        if(!timer && !gameover){
+    function submitQuiz(){
+        setTimeLeft(0)
+        setTimer(false)
+        setGameover(true)
+    }
+
+    function formatTimeLeft(time) {
+        // The largest round integer less than or equal to the result of time divided being by 60.
+        const minutes = Math.floor(time / 60);
+        
+        // Seconds are the remainder of the time divided by 60 (modulus operator)
+        let seconds = time % 60;
+        
+        // If the value of seconds is less than 10, then display seconds with a leading zero
+        if (seconds < 10) {
+          seconds = `0${seconds}`;
+        }
+      
+        // The output in MM:SS format
+        return `${minutes}:${seconds}`;
+      }
+
+        if(loading){
+            return(
+                <h2>Loading...</h2>
+            )
+        }
+        
+        else if(!timer && !gameover){
             return(   
             <form onSubmit={submitHandler} className="quiz-entry-menu">
                 <label>Please choose difficulty</label>
@@ -113,15 +145,16 @@ const Quiz = () => {
                         {questions.map((q,i) => (<div key = {i}>
                             <Card questionIndex ={i} Q={q.question} I = {q.incorrect_answers} A = {q.correct_answer} setScore={setScore} scoreIndex={i}/>
                         </div>))}
+                    <button onClick={submitQuiz}>Submit</button>
                     </div>
-                    <div className="timer-container"><div className="timer-box">{timeLeft/timeInterval}</div></div>
+                    <div className="timer-container"><div className="timer-box"><CircularProgressbar value={testTime - timeLeft} maxValue={testTime} text={formatTimeLeft(timeLeft/timeInterval)} /></div></div>
                 </div>
             )
         }
         else if(gameover){
             return (
                 <div className="gameover-card">
-                    <div>Your Scorecard, your score is {scoreHandler()}</div>
+                    <div>Your score is {scoreHandler()}</div>
                     <div className="btn-container">
                         <button onClick={() => history.push('/')}>Go to home</button>
                         <button onClick={resetHandler}>Retry</button>

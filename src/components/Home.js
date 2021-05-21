@@ -61,9 +61,12 @@ const Home = () => {
     }
     return exist
   }
+  if(categories)
   return (
     <div>
+      <h1 id="home">
       Quiz
+      </h1>
       <div className="quiz-card">
         {categories !== undefined
           ? categories.map((categ, i) => (
@@ -83,6 +86,10 @@ const Home = () => {
       </div>
     </div>
   );
+  else
+  return(
+    <h2>Loading...</h2>
+  )
 };
 
 export default Home;

@@ -33,13 +33,10 @@
             height: calc(100% - 4rem);
             border-radius: inherit;
             object-fit: cover;
+            flex: 1;
         }
         p{
             font-size: 1rem;
-            margin: 0;
-            padding: 0;
-            height: 4rem;
-            line-height: 4;
         }
     }
 }
